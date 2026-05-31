@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block title %}Dashboard - E-Commerce{% endblock %}
+{% block content %}
+<div class="py-4">
+    <h1 class="mb-4">Dashboard</h1>
+    <div class="row g-4">
+        <div class="col-md-4">
+            <div class="card shadow-sm text-center p-4">
+                <h5 class="card-title">Bienvenido</h5>
+                <p class="card-text text-muted">Hola, <strong>{{ user.username }}</strong>!</p>
+                <p class="card-text text-muted">Email: {{ user.email|default:"No proporcionado" }}</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card shadow-sm text-center p-4">
+                <h5 class="card-title">Productos</h5>
+                <p class="card-text text-muted">Explora nuestro catálogo de productos.</p>
+                <a href="{% url 'products' %}" class="btn btn-dark">Ver Productos</a>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card shadow-sm text-center p-4">
+                <h5 class="card-title">Cuenta</h5>
+                <p class="card-text text-muted">Miembro desde {{ user.date_joined|date:"M Y" }}</p>
+                <form method="post" action="{% url 'logout' %}">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-outline-dark">Cerrar sesión</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

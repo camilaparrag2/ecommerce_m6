@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block title %}Productos - E-Commerce{% endblock %}
+{% block content %}
+<div class="py-4">
+    <h1 class="mb-4">Catálogo de Productos</h1>
+    {% if products %}
+        <div class="row g-4">
+            {% for product in products %}
+                <div class="col-md-4 col-lg-3">
+                    <div class="card shadow-sm h-100">
+                        {% if product.imagen %}
+                            <img src="{{ product.imagen.url }}" class="card-img-top" alt="{{ product.nombre }}" style="height: 200px; object-fit: cover;">
+                        {% else %}
+                            <div class="bg-light d-flex align-items-center justify-content-center" style="height: 200px;">
+                                <span class="text-muted">Sin imagen</span>
+                            </div>
+                        {% endif %}
+                        <div class="card-body d-flex flex-column">
+                            <h5 class="card-title">{{ product.nombre }}</h5>
+                            <p class="card-text text-muted small">{{ product.descripcion|truncatewords:20 }}</p>
+                            <div class="mt-auto">
+                                <p class="fw-bold mb-1">${{ product.precio }}</p>
+                                <p class="text-muted small mb-0">
+                                    Stock: {% if product.stock > 0 %}
+                                        <span class="text-success">{{ product.stock }} disponibles</span>
+                                    {% else %}
+                                        <span class="text-danger">Agotado</span>
+                                    {% endif %}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="text-center py-5">
+            <p class="text-muted">No hay productos disponibles aún.</p>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}
